@@ -29,7 +29,7 @@
 `$ sudo apt-get update`  
 `$ sudo apt-get install julia`
 
-## 3. 直接pull建好的docker 映像檔
+## 3. 使用docker直接pull建好的映像檔
 
 [Julia官方庫](https://hub.docker.com/r/library/julia/)  
 
@@ -81,6 +81,7 @@
 然後下
 `$ julia hello.jl`
 
+會輸出
 
 > Hello,world
 
