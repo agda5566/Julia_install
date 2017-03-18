@@ -1,37 +1,86 @@
-## Welcome to GitHub Pages
+# 安裝Julia紀錄
 
-You can use the [editor on GitHub](https://github.com/agda5566/Julia_install/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+弄這個弄了兩天orz
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## 1. 透過git clone官方庫然後make
 
-### Markdown
+我沒成功...到現在還是搞不清楚為甚麼？  
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+要求的依賴我都裝了說......  
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+## 2. 透過add-apt-repositor ppa安裝
 
-- Bulleted
-- List
+我太天真了，docker居然沒有內建add-apt得自己安裝  
 
-1. Numbered
-2. List
+一下看了阿舍大大的介紹才知道  
 
-**Bold** and _Italic_ and `Code` text
+[連結](http://www.arthurtoday.com/2010/09/ubuntu-add-apt-repository.html)  
 
-[Link](url) and ![Image](src)
-```
+需要安裝  
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+`$ sudo apt-get install python-software-properties`  
 
-### Jekyll Themes
+`$ sudo apt-get install software-properties-common `  
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/agda5566/Julia_install/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+然後新增官方ppa  
 
-### Support or Contact
+`$ sudo add-apt-repository ppa:staticfloat/julia-deps`  
+`$ sudo apt-get update`  
+`$ sudo apt-get install julia`
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## 3. 直接pull建好的docker 映像檔
+
+[Julia官方庫](https://hub.docker.com/r/library/julia/)  
+
+`$ sudo docker pull library/julia:0.5.1` 
+
+:後面的看你要哪種版本
+
+直接使用
+
+`$ docker run -it --rm julia:0.5.1` 
+
+> 沒有-ti無法看到輸出，--rm讓你退出容器後立刻刪除資料，讓你想要rmi就rmi不用先rm
+
+或是
+
+`$ sudo run -it --rm julia:0.5.1 /bin/bash`
+
+
+
+掛載資料夾
+
+先在home創建一個Julia資料夾
+
+接著
+
+`$ sudo docker run -it --rm -v /home/你的名字/julia:/usr/myapp julia:0.5.1 /bin/bash`
+
+> -v /home/你的名字/julia:/usr/myapp
+
+這一段是把自己的julia資料夾掛到docker裏面的/usr/myapp 
+
+想掛home也可以
+
+# Hello,World
+
+裝好了當然要來個經典Hello,world
+
+在/home/你的名字/julia下新增檔案hello.jl
+裏面打好`println("hello,world")`
+然後進去容器
+
+`$ sudo docker run -it --rm -v /home/你的名字/julia:/usr/myapp julia:0.5.1 /bin/bash`
+
+`$ cd /user/myapp` 
+`$ ls `
+
+應該可以看到有個hello.jl檔案
+
+然後下
+`$ julia hello.jl`
+
+
+> Hello,world
+
